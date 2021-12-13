@@ -149,8 +149,10 @@ async function bench() {
         const timeBegin = Date.now();
 
         if (process.env.FAST_RUN) {
+            print('Executará apenas UMA vez!');
             await extractBuildReactApp(path.join(tmpDir, 'bench'), 1);
         } else {
+            print('Executará 30 vezes.')
             for (let i = 0; i < 3; i++) {
                 await extractBuildReactApp(path.join(tmpDir, 'bench' + i), 10);
             }
@@ -171,12 +173,10 @@ async function bench() {
         results.push({ label: 'Details', info: minutes + 'm:' + Math.floor(seconds) + 's' });
         print();
         await printBox(results, "Results");
-    }
-    catch (err) {
+    } catch (err) {
         print('Error...');
         print(JSON.stringify(err));
-    }
-    finally {
+    } finally {
         try {
             process.chdir(os.tmpdir());
 
@@ -219,8 +219,7 @@ async function bench() {
 
                 print('All done!');
             }
-        }
-        catch (e) {
+        } catch (e) {
             print(`An error has occurred while removing the temp folder at ${tmpDir}. Please remove it manually.Error: ${e} `);
         }
     }
